@@ -1,4 +1,4 @@
-# client.py
+# client_example.py
 import sys
 import os
 import random
@@ -18,10 +18,10 @@ client = discord.Client(intents=client_intents)
 @client.event
 async def on_ready():
     guild = discord.utils.get(client.guilds, name=GUILD)
-    print(f'{client.user} has connected to {guild.name}!')
-
-    members = '\n - '.join([member.name for member in guild.members])
-    print(f'Guild Members:\n - {members}\n')
+    if guild:
+        print(f'{client.user} has connected to {guild.name}!')
+        members = '\n - '.join([member.name for member in guild.members])
+        print(f'Guild Members:\n - {members}\n')
 
 
 @client.event
@@ -58,4 +58,5 @@ async def on_error(event, *args, **kwargs):
         else:
             raise
 
-client.run(TOKEN)
+if TOKEN:
+    client.run(TOKEN)

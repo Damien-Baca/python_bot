@@ -1,4 +1,4 @@
-# bot.py
+# bot_class_example.py
 from os import getenv
 
 import discord
@@ -14,10 +14,12 @@ GUILD = getenv('DISCORD_GUILD')
 class DiscordBot(commands.Bot):
     async def on_ready(self):
         guild = discord.utils.get(self.guilds, name=GUILD)
-        print(f'{self.user.name} has connected to {guild.name}!')
+        if self.user and guild:
+            print(f'{self.user.name} has connected to {guild.name}!')
 
 
 bot_intents = discord.Intents.all()
 bot = DiscordBot(command_prefix='!', intents=bot_intents)
 
-bot.run(TOKEN)
+if TOKEN:
+    bot.run(TOKEN)

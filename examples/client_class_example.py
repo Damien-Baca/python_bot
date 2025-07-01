@@ -1,4 +1,4 @@
-# client.py
+# client_class_example.py
 import sys
 import os
 import random
@@ -14,12 +14,12 @@ GUILD = os.getenv('DISCORD_GUILD')
 class DiscordClient(discord.Client):
     async def on_ready(self):
         guild = discord.utils.get(self.guilds, name=GUILD)
-        print(f'{self.user} has connected to {guild.name}!')
+        if guild:
+            print(f'{self.user} has connected to {guild.name}!')
+            members = '\n - '.join([member.name for member in guild.members])
+            print(f'Guild Members:\n - {members}\n')
 
-        members = '\n - '.join([member.name for member in guild.members])
-        print(f'Guild Members:\n - {members}\n')
-
-    async def on_member_join(member):
+    async def on_member_join(self, member):
         await member.create_dm()
         await member.dm_channel.send(f'Hi {member.name}, welcome to the server! Follow the rules or be DELETED!')
 
@@ -51,4 +51,6 @@ class DiscordClient(discord.Client):
 
 client_intents = discord.Intents.all()
 client = DiscordClient(intents=client_intents)
-client.run(TOKEN)
+
+if TOKEN:
+    client.run(TOKEN)
