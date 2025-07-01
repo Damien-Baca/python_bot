@@ -1,4 +1,4 @@
-# bot.py
+# client.py
 import sys
 import os
 import random
